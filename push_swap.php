@@ -1,5 +1,8 @@
 <?php
 
+// require("bonus/ANSI_colors.php");
+$bonus = false;
+
 class Pushswap
 {
 
@@ -12,6 +15,10 @@ class Pushswap
 
     public function sa()
     {
+        global $bonus;
+        global $bg_gradient1;
+        global $clear;
+
         // Swap the first 2 elements at the top of A and put it at the top of A
         if (count($this->la) >= 2) {
             $arraysize = count($this->la);
@@ -20,11 +27,19 @@ class Pushswap
             $this->la[$arraysize - 1] = $swap_element;
             $this->la[$arraysize - 2] = $element;
         }
+
+        if ($bonus) {
+            return $bg_gradient1 . "sa" . $clear;
+        }
         return "sa";
     }
 
     public function sb()
     {
+        global $bonus;
+        global $bg_gradient2;
+        global $clear;
+
         // Swap the first 2 elements at the top of B and put it at the top of B
         if (count($this->lb) >= 2) {
             $arraysize = count($this->lb);
@@ -32,6 +47,10 @@ class Pushswap
             $swap_element = $this->lb[$arraysize - 2];
             $this->lb[$arraysize - 1] = $swap_element;
             $this->lb[$arraysize - 2] = $element;
+        }
+
+        if ($bonus) {
+            return $bg_gradient2 . "sb" . $clear;
         }
         return "sb";
     }
@@ -45,39 +64,69 @@ class Pushswap
 
     public function pa()
     {
+        global $bonus;
+        global $bg_gradient3;
+        global $clear;
+
         // Take the first element at the top of B and put it at the top of A.
         // Do nothing if B is empty
         if (!empty($this->lb)) {
             $element = array_pop($this->lb);
             array_push($this->la, $element);
         }
+
+        if ($bonus) {
+            echo $bg_gradient3;
+            return $bg_gradient3 . "pa" . $clear;
+        }
         return "pa";
     }
 
     public function pb()
     {
+        global $bonus;
+        global $bg_gradient4;
+        global $clear;
+
         // Take the first element at the top of A and put it at the top of B.
         // Do nothing if A is empty
         if (!empty($this->la)) {
             $element = array_pop($this->la);
             array_push($this->lb, $element);
         }
+        if ($bonus) {
+            return $bg_gradient4 . "pb" . $clear;
+        }
         return "pb";
     }
 
     public function ra()
     {
+        global $bonus;
+        global $bg_gradient5;
+        global $clear;
+
         // First element becomes last
         $element = array_pop($this->la);
         array_unshift($this->la, $element);
+        if ($bonus) {
+            return $bg_gradient5 . "ra" . $clear;
+        }
         return "ra";
     }
 
     public function rb()
     {
+        global $bonus;
+        global $bg_gradient6;
+        global $clear;
+
         // First element becomes last
         $element = array_pop($this->lb);
         array_unshift($this->lb, $element);
+        if ($bonus) {
+            return $bg_gradient6 . "rb" . $clear;
+        }
         return "rb";
     }
 
@@ -90,17 +139,31 @@ class Pushswap
 
     public function rra()
     {
+        global $bonus;
+        global $bg_gradient6_5;
+        global $clear;
+
         // Last element becomes first
         $element = array_shift($this->la);
         array_push($this->la, $element);
+        if ($bonus) {
+            return $bg_gradient6_5 . "rra" . $clear;
+        }
         return "rra";
     }
 
     public function rrb()
     {
+        global $bonus;
+        global $bg_gradient5_5;
+        global $clear;
+
         // Last element becomes first
         $element = array_shift($this->lb);
         array_push($this->lb, $element);
+        if ($bonus) {
+            return $bg_gradient5_5 . "rrb" . $clear;
+        }
         return "rrb";
     }
 
@@ -178,6 +241,12 @@ class Pushswap
         }
         return $resultString;
     }
+
+    public function show_bonus()
+    {
+        global $bonus;
+        $bonus = true;
+    }
 }
 
 // Remove first element of $argv
@@ -192,5 +261,6 @@ foreach ($argv as $input) {
 }
 
 $pushswap = new Pushswap($argv);
+//$actions = $pushswap->show_bonus();
 $actions = $pushswap->sort();
 echo $actions;
