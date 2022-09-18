@@ -1,6 +1,6 @@
 <?php
 
-require("bonus/ANSI_colors.php");
+// require("bonus/ANSI_colors.php");
 $bonus = false;
 
 class Pushswap
@@ -260,6 +260,6 @@ foreach ($argv as $input) {
 }
 
 $pushswap = new Pushswap($argv);
-$actions = $pushswap->show_bonus();
+// $actions = $pushswap->show_bonus();
 $actions = $pushswap->sort();
 echo $actions;
