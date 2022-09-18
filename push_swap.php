@@ -116,60 +116,18 @@ class Pushswap
         var_dump($this->la);
     }
 
-    public function insertionSort()
-    {
-        $resultString = "";
-        $laInitSize = count($this->la);
-        for ($nb = 0; $nb < $laInitSize; ++$nb) {
-            // Step 1: look for max index
-            $minIndex = 0;
-            $minValue = PHP_INT_MAX;
-            for ($index = 0; $index < count($this->la); ++$index) {
-                if ($this->la[$index] < $minValue) {
-                    $minIndex = $index;
-                    $minValue = $this->la[$index];
-                }
-            }
-
-            // Step 2: Put max value at the top
-            if ($minIndex < count($this->la) / 2) {
-                // rotate from bot to top is faster
-                for ($i = $minIndex; $i >= 0; --$i) {
-                    $resultString .= " " . $this->rra();
-                }
-            } else {
-                // rotate from top to bot is faster
-                for ($i = $minIndex; $i < count($this->la) - 1; ++$i) {
-                    $resultString .= " " . $this->ra();
-                }
-            }
-
-            // Step 3 send to top b
-            $resultString .= " " . $this->pb();
-        }
-
-        // LB sorted
-        // Send back to LA
-        $lbInitSize = count($this->lb);
-        for ($nb = 0; $nb < $lbInitSize; ++$nb) {
-            $resultString .= " " . $this->pa();
-        }
-        return $resultString;
-    }
-
     public function sort()
     {
+        // Check if already sorted
         $result = "";
-        // check if already sorted
         $sorted = true;
-        for ($index = 0; $index < count($this->la) - 1; ++$index) {
-            if ($this->la[$index] < $this->la[$index + 1]) {
+        for ($i = 0; $i < count($this->la) - 1; $i++) {
+            if ($this->la[$i] < $this->la[$i + 1]) {
                 $sorted = false;
                 break;
             }
         }
 
-        // return if already sorted
         if ($sorted) {
             return $result . PHP_EOL;
         }
@@ -179,12 +137,53 @@ class Pushswap
         // Remove first " " space
         return substr($result, 1) . PHP_EOL;
     }
+
+    public function insertionSort()
+    {
+        $resultString = "";
+        $laInitSize = count($this->la);
+        for ($nb = 0; $nb < $laInitSize; $nb++) {
+            // Look for min index
+            $minIndex = 0;
+            $minValue = PHP_INT_MAX;
+            for ($i = 0; $i < count($this->la); $i++) {
+                if ($this->la[$i] < $minValue) {
+                    $minIndex = $i;
+                    $minValue = $this->la[$i];
+                }
+            }
+
+            // Put min value at the top
+            if ($minIndex < count($this->la) / 2) {
+                // Rotate from bot to top
+                for ($i = $minIndex; $i >= 0; $i--) {
+                    $resultString .= " " . $this->rra();
+                }
+            } else {
+                // Rotate from top to bot
+                for ($i = $minIndex; $i < count($this->la) - 1; $i++) {
+                    $resultString .= " " . $this->ra();
+                }
+            }
+
+            // Send to top B
+            $resultString .= " " . $this->pb();
+        }
+
+        // Stack B sorted
+        // Send back to Stack A
+        $lbInitSize = count($this->lb);
+        for ($nb = 0; $nb < $lbInitSize; $nb++) {
+            $resultString .= " " . $this->pa();
+        }
+        return $resultString;
+    }
 }
 
-// Remove program name (first element of $argv)
+// Remove first element of $argv
 array_shift($argv);
 
-// check if input is numeric
+// Check if input is numeric ?
 foreach ($argv as $input) {
     if (!is_numeric($input)) {
         echo $input . " is not a number!" . PHP_EOL;
