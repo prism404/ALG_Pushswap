@@ -1,6 +1,6 @@
 <?php
 
-// require("bonus/ANSI_colors.php");
+require("bonus/ANSI_colors.php");
 $bonus = false;
 
 class Pushswap
@@ -37,7 +37,7 @@ class Pushswap
     public function sb()
     {
         global $bonus;
-        global $bg_gradient2;
+        global $bg_gradient1_5;
         global $clear;
 
         // Swap the first 2 elements at the top of B and put it at the top of B
@@ -50,7 +50,7 @@ class Pushswap
         }
 
         if ($bonus) {
-            return $bg_gradient2 . "sb" . $clear;
+            return $bg_gradient1_5 . "sb" . $clear;
         }
         return "sb";
     }
@@ -65,7 +65,7 @@ class Pushswap
     public function pa()
     {
         global $bonus;
-        global $bg_gradient3;
+        global $bg_gradient1;
         global $clear;
 
         // Take the first element at the top of B and put it at the top of A.
@@ -76,8 +76,7 @@ class Pushswap
         }
 
         if ($bonus) {
-            echo $bg_gradient3;
-            return $bg_gradient3 . "pa" . $clear;
+            return $bg_gradient1 . "pa" . $clear;
         }
         return "pa";
     }
@@ -85,7 +84,7 @@ class Pushswap
     public function pb()
     {
         global $bonus;
-        global $bg_gradient4;
+        global $bg_gradient2_5;
         global $clear;
 
         // Take the first element at the top of A and put it at the top of B.
@@ -95,7 +94,7 @@ class Pushswap
             array_push($this->lb, $element);
         }
         if ($bonus) {
-            return $bg_gradient4 . "pb" . $clear;
+            return $bg_gradient2_5 . "pb" . $clear;
         }
         return "pb";
     }
@@ -103,14 +102,14 @@ class Pushswap
     public function ra()
     {
         global $bonus;
-        global $bg_gradient5;
+        global $bg_gradient3;
         global $clear;
 
         // First element becomes last
         $element = array_pop($this->la);
         array_unshift($this->la, $element);
         if ($bonus) {
-            return $bg_gradient5 . "ra" . $clear;
+            return $bg_gradient3 . "ra" . $clear;
         }
         return "ra";
     }
@@ -118,14 +117,14 @@ class Pushswap
     public function rb()
     {
         global $bonus;
-        global $bg_gradient6;
+        global $bg_gradient3_5;
         global $clear;
 
         // First element becomes last
         $element = array_pop($this->lb);
         array_unshift($this->lb, $element);
         if ($bonus) {
-            return $bg_gradient6 . "rb" . $clear;
+            return $bg_gradient3_5 . "rb" . $clear;
         }
         return "rb";
     }
@@ -140,14 +139,14 @@ class Pushswap
     public function rra()
     {
         global $bonus;
-        global $bg_gradient6_5;
+        global $bg_gradient4;
         global $clear;
 
         // Last element becomes first
         $element = array_shift($this->la);
         array_push($this->la, $element);
         if ($bonus) {
-            return $bg_gradient6_5 . "rra" . $clear;
+            return $bg_gradient4 . "rra" . $clear;
         }
         return "rra";
     }
@@ -155,14 +154,14 @@ class Pushswap
     public function rrb()
     {
         global $bonus;
-        global $bg_gradient5_5;
+        global $bg_gradient4_5;
         global $clear;
 
         // Last element becomes first
         $element = array_shift($this->lb);
         array_push($this->lb, $element);
         if ($bonus) {
-            return $bg_gradient5_5 . "rrb" . $clear;
+            return $bg_gradient4_5 . "rrb" . $clear;
         }
         return "rrb";
     }
@@ -261,6 +260,6 @@ foreach ($argv as $input) {
 }
 
 $pushswap = new Pushswap($argv);
-//$actions = $pushswap->show_bonus();
+$actions = $pushswap->show_bonus();
 $actions = $pushswap->sort();
 echo $actions;
